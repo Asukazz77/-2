@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="zh-CN" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>豆苗实验室 · 三个小实验，看懂一台计算机</title>
+<meta name="description" content="面向 6–12 岁孩子的少儿 AI 与计算机科普互动网站。三个能上手的小实验：开关就是数字、AI 怎么认猫、这封信能信吗。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23FBF6E9'/%3E%3Cpath d='M20 28V17' stroke='%234C8B3F' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M20 19c-5 0-9-4-9-9 5 0 9 4 9 9z' fill='%238FB86E'/%3E%3Cpath d='M20 19c5 0 9-4 9-9-5 0-9 4-9 9z' fill='%238FB86E'/%3E%3Cpath d='M11 28h18l-2 7H13z' fill='%23E0C9A6' stroke='%239C7B52' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body class="is-intro">
+<a class="skip" href="#main">跳到正文</a>
+
+<!-- 手绘波浪线用的小滤镜；顺便放一个可以复用的迷你豆苗 -->
+<svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <defs>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+      <symbol id="pet-char" viewBox="0 0 80 86">
+        <g class="pet__body">
+          <path d="M40 30V14" stroke="#3F7A34" stroke-width="3.6" stroke-linecap="round" fill="none"/>
+          <path class="pet__leaf pet__leaf--l" d="M40 17c-7 0-12-5-12-11 7 0 12 5 12 11z" fill="#8FB86E" stroke="#3F7A34" stroke-width="2.6" stroke-linejoin="round"/>
+          <path class="pet__leaf pet__leaf--r" d="M40 17c7 0 12-5 12-11-7 0-12 5-12 11z" fill="#8FB86E" stroke="#3F7A34" stroke-width="2.6" stroke-linejoin="round"/>
+          <rect x="7" y="29" width="66" height="46" rx="9" fill="#FFFDF6" stroke="#2A2A28" stroke-width="3.4"/>
+          <rect x="14" y="36" width="52" height="32" rx="5" fill="#FFF6D6" stroke="#2A2A28" stroke-width="2.4"/>
+          <ellipse class="pet__eye" cx="31" cy="50" rx="2.6" ry="3" fill="#2A2A28"/>
+          <ellipse class="pet__eye" cx="49" cy="50" rx="2.6" ry="3" fill="#2A2A28"/>
+          <path d="M35 58q5 4 10 0" fill="none" stroke="#2A2A28" stroke-width="2.4" stroke-linecap="round"/>
+          <rect x="34" y="75" width="12" height="5" fill="#FFFDF6" stroke="#2A2A28" stroke-width="2.4"/>
+          <rect x="26" y="79" width="28" height="4" rx="2" fill="#FFFDF6" stroke="#2A2A28" stroke-width="2.4"/>
+        </g>
+      </symbol>
+    <symbol id="sprout-mini" viewBox="0 0 48 48">
+      <path d="M24 33V20" stroke="#3F7A34" stroke-width="3.4" stroke-linecap="round" fill="none"/>
+      <path d="M24 22c-6 0-11-5-11-11 6 0 11 5 11 11z" fill="#8FB86E" stroke="#3F7A34" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M24 22c6 0 11-5 11-11-6 0-11 5-11 11z" fill="#8FB86E" stroke="#3F7A34" stroke-width="2.2" stroke-linejoin="round"/>
+      <path d="M15 33h18l-2 8H17z" fill="#E0C9A6" stroke="#9C7B52" stroke-width="2.2" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <a class="brand" href="#cover" data-go="cover">
+    <span class="brand__mark" aria-hidden="true">
+      <svg viewBox="0 0 40 40" width="40" height="40">
+        <path d="M20 27V16" stroke="#4C8B3F" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path d="M20 18c-5 0-9-4-9-9 5 0 9 4 9 9z" fill="#8FB86E" stroke="#3F7A34" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M20 18c5 0 9-4 9-9-5 0-9 4-9 9z" fill="#8FB86E" stroke="#3F7A34" stroke-width="1.8" stroke-linejoin="round"/>
+        <path d="M11.5 27h17l-2 8h-13z" fill="#E8D7BE" stroke="#A98763" stroke-width="1.8" stroke-linejoin="round"/>
+        <circle cx="16.5" cy="30.5" r="1.2" fill="#3A3A34"/>
+        <circle cx="23.5" cy="30.5" r="1.2" fill="#3A3A34"/>
+      </svg>
+    </span>
+    <span class="brand__txt">豆苗实验室</span>
+  </a>
+
+  <nav class="tabs" aria-label="实验目录">
+    <button class="tab" data-go="exp1"><span class="tab__n">01</span><span class="tab__t">开关就是数字</span></button>
+    <button class="tab" data-go="exp2" data-locked="1"><span class="tab__n">02</span><span class="tab__t">AI 认猫</span></button>
+    <button class="tab" data-go="exp3" data-locked="1"><span class="tab__n">03</span><span class="tab__t">能信吗</span></button>
+    <button class="tab" data-go="cert" data-locked="1"><span class="tab__n">✓</span><span class="tab__t">毕业证</span></button>
+  </nav>
+</header>
+
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<main id="main">
+
+  <!-- ================= 封面 ================= -->
+  <section class="page page--cover" id="cover" data-page="cover" aria-labelledby="cover-h">
+    <div class="cover__grid">
+      <div class="cover__txt">
+        <p class="kicker">河海大学计算机与软件学院 ·「豆苗逐智·童享科技」</p>
+        <h1 id="cover-h">豆苗实验室</h1>
+        <p class="lead">三个小实验，看懂一台计算机</p>
+        
+
+        <ul class="contents">
+          <li><b>01</b><span>开关就是数字</span><em>4 关</em></li>
+          <li><b>02</b><span>AI 是怎么认出猫的</span><em>4 个线索 + 4 题</em></li>
+          <li><b>03</b><span>这封信能信吗</span><em>5 封</em></li>
+        </ul>
+
+        <button class="btn btn--big" data-go="exp1">开始做实验 <span aria-hidden="true">→</span></button>
+        
+      </div>
+
+      <div class="cover__art">
+        <svg class="scene" viewBox="0 0 400 396" role="img" aria-label="一台会笑的电脑，屏幕上方长出一株豆苗，下面是键盘">
+          <g>
+            <ellipse class="sc-shadow" cx="200" cy="388" rx="152" ry="6" fill="#2A2A28" opacity="0.07"/>
+
+            <!-- 飘着的 0 和 1 -->
+            <g class="sc-bits" fill="#2A2A28">
+              <text class="bit b1" x="98" y="148">0</text>
+              <text class="bit b2" x="302" y="148">1</text>
+            </g>
+
+            <!-- 键盘 -->
+            <g class="sc-keyboard">
+              <rect x="40" y="348" width="320" height="36" rx="10" fill="#E3EBF3" stroke="#2A2A28" stroke-width="4"/>
+              <g fill="#FFFDF6" stroke="#2A2A28" stroke-width="2.5">
+                <rect x="52" y="356" width="18" height="11" rx="3"/>
+                <rect x="83" y="356" width="18" height="11" rx="3"/>
+                <rect x="114" y="356" width="18" height="11" rx="3"/>
+                <rect x="145" y="356" width="18" height="11" rx="3"/>
+                <rect x="176" y="356" width="18" height="11" rx="3"/>
+                <rect x="207" y="356" width="18" height="11" rx="3"/>
+                <rect x="238" y="356" width="18" height="11" rx="3"/>
+                <rect x="269" y="356" width="18" height="11" rx="3"/>
+                <rect x="300" y="356" width="18" height="11" rx="3"/>
+                <rect x="331" y="356" width="17" height="11" rx="3"/>
+                <rect x="140" y="372" width="120" height="8" rx="3"/>
+              </g>
+            </g>
+
+            <!-- 支架 -->
+            <g class="sc-stand">
+              <rect x="184" y="318" width="32" height="16" fill="#FFFDF6" stroke="#2A2A28" stroke-width="4"/>
+              <rect x="152" y="332" width="96" height="8" rx="4" fill="#FFFDF6" stroke="#2A2A28" stroke-width="4"/>
+            </g>
+
+            <!-- 屏幕 -->
+            <g class="sc-monitor">
+              <rect x="92" y="164" width="216" height="154" rx="18" fill="#FFFDF6" stroke="#2A2A28" stroke-width="4"/>
+              <rect x="108" y="180" width="184" height="122" rx="10" fill="#FFF6D6" stroke="#2A2A28" stroke-width="3"/>
+            </g>
+
+            <!-- 屏幕上的表情 -->
+            <g class="sc-eyes" fill="#2A2A28">
+              <ellipse class="sc-eye" cx="166" cy="236" rx="6" ry="6.6"/>
+              <ellipse class="sc-eye" cx="234" cy="236" rx="6" ry="6.6"/>
+            </g>
+            <path class="sc-smile" d="M184 256q16 13 32 0" fill="none" stroke="#2A2A28" stroke-width="3.6" stroke-linecap="round"/>
+            <text x="200" y="294" text-anchor="middle" font-size="13" letter-spacing="5" fill="#9C9A90" opacity="0.75">0101</text>
+
+            <!-- 头上的豆苗 -->
+            <path class="sc-stem" pathLength="1" d="M200 164c0-22 0-32 0-44" fill="none" stroke="#3F7A34" stroke-width="7" stroke-linecap="round"/>
+            <path class="sc-leaf sc-leaf-l" d="M200 120c-40 0-70-28-72-64 38 0 68 28 72 64z" fill="#8FB86E" stroke="#3F7A34" stroke-width="4" stroke-linejoin="round"/>
+            <path class="sc-leaf sc-leaf-r" d="M200 120c40 0 70-28 72-64-38 0-68 28-72 64z" fill="#8FB86E" stroke="#3F7A34" stroke-width="4" stroke-linejoin="round"/>
+
+            <!-- 铅笔 -->
+            <g class="sc-pencil" stroke="#2A2A28" stroke-width="3.5" stroke-linejoin="round">
+              <rect x="21" y="228" width="18" height="84" rx="2" fill="#F2B705"/>
+              <path d="M21 312l9 16 9-16z" fill="#F7E2B0"/>
+              <path d="M25.5 321l4.5 7 4.5-7z" fill="#2A2A28" stroke="none"/>
+              <rect x="21" y="228" width="18" height="11" fill="#D94F3D"/>
+            </g>
+
+            <!-- 灯泡 -->
+            <g class="sc-bulb">
+              <path d="M352 68V28" stroke="#2A2A28" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="352" cy="22" r="4" fill="none" stroke="#2A2A28" stroke-width="3"/>
+              <circle class="sc-glow" cx="352" cy="94" r="34" fill="#F2B705" opacity="0.16"/>
+              <circle cx="352" cy="94" r="22" fill="#FFF6D6" stroke="#2A2A28" stroke-width="3.5"/>
+              <path d="M345 101l5-8-2.5 5 6.5-4.5" fill="none" stroke="#D94F3D" stroke-width="3" stroke-linecap="round"/>
+              <rect x="343" y="114" width="18" height="10" rx="2" fill="#B9B5A8" stroke="#2A2A28" stroke-width="3"/>
+            </g>
+          </g>
+        </svg>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 实验一 ================= -->
+  <section class="page" id="exp1" data-page="exp1" aria-labelledby="exp1-h">
+    <div class="sheet">
+      <p class="kicker">实验一 · 4 关</p>
+      <h2 id="exp1-h">开关就是数字</h2>
+      <svg class="squiggle" viewBox="0 0 120 9" aria-hidden="true"><path pathLength="1" d="M2 6c14-5 30-5 44 0s30 5 44 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <p class="sub">计算机只会开和关。四个开关，就是四位<b>二进制</b>：每一位只能是 0 或 1。把亮着的位加起来，就得到一个数。</p>
+
+      <div class="goal" id="goal1" role="status" aria-live="polite">
+        <p class="goal__kick" id="goalKick">第 1 关 / 共 4 关</p>
+        <p class="goal__main" id="goalMain">凑出 <b>3</b></p>
+        <p class="goal__hint" id="goalHint"></p>
+      </div>
+
+      <div class="bulbs" role="group" aria-label="四位二进制开关，从左到右的位权是 8 4 2 1">
+        <button class="bulb" data-bit="8" aria-pressed="false"><span class="bulb__val">0</span><svg viewBox="0 0 24 34" aria-hidden="true"><path class="g" d="M12 2.5a9 9 0 0 0-5.1 16.4c.9.6 1.3 1.5 1.3 2.4h7.6c0-.9.4-1.8 1.3-2.4A9 9 0 0 0 12 2.5z"/><path class="f" d="M9.4 15.6l1.8-3-1 2.6 2.5-1.9"/><path class="b" d="M8.6 23.3h6.8M9.6 26.6h4.8"/></svg><b>8</b></button>
+        <button class="bulb" data-bit="4" aria-pressed="false"><span class="bulb__val">0</span><svg viewBox="0 0 24 34" aria-hidden="true"><path class="g" d="M12 2.5a9 9 0 0 0-5.1 16.4c.9.6 1.3 1.5 1.3 2.4h7.6c0-.9.4-1.8 1.3-2.4A9 9 0 0 0 12 2.5z"/><path class="f" d="M9.4 15.6l1.8-3-1 2.6 2.5-1.9"/><path class="b" d="M8.6 23.3h6.8M9.6 26.6h4.8"/></svg><b>4</b></button>
+        <button class="bulb" data-bit="2" aria-pressed="false"><span class="bulb__val">0</span><svg viewBox="0 0 24 34" aria-hidden="true"><path class="g" d="M12 2.5a9 9 0 0 0-5.1 16.4c.9.6 1.3 1.5 1.3 2.4h7.6c0-.9.4-1.8 1.3-2.4A9 9 0 0 0 12 2.5z"/><path class="f" d="M9.4 15.6l1.8-3-1 2.6 2.5-1.9"/><path class="b" d="M8.6 23.3h6.8M9.6 26.6h4.8"/></svg><b>2</b></button>
+        <button class="bulb" data-bit="1" aria-pressed="false"><span class="bulb__val">0</span><svg viewBox="0 0 24 34" aria-hidden="true"><path class="g" d="M12 2.5a9 9 0 0 0-5.1 16.4c.9.6 1.3 1.5 1.3 2.4h7.6c0-.9.4-1.8 1.3-2.4A9 9 0 0 0 12 2.5z"/><path class="f" d="M9.4 15.6l1.8-3-1 2.6 2.5-1.9"/><path class="b" d="M8.6 23.3h6.8M9.6 26.6h4.8"/></svg><b>1</b></button>
+      </div>
+
+      <p class="eq" aria-live="polite">
+        <span class="eq__terms" id="eqTerms"><i>0</i>×8 + <i>0</i>×4 + <i>0</i>×2 + <i>0</i>×1</span>
+        <span class="eq__sum">= <b id="sum">0</b></span>
+      </p>
+
+      <div class="tasks">
+        
+        <ol class="tasklist" id="tasklist1">
+          <li data-goal="3" data-exact="2"><span class="tick" aria-hidden="true"></span><span>凑出 <b>3</b></span></li>
+          <li data-goal="15"><span class="tick" aria-hidden="true"></span><span>凑出 <b>15</b></span></li>
+          <li data-goal="12"><span class="tick" aria-hidden="true"></span><span>凑出 <b>12</b></span></li>
+          <li data-goal="9"><span class="tick" aria-hidden="true"></span><span>凑出 <b>9</b></span></li>
+        </ol>
+      </div>
+
+      <div class="finding" id="find1" hidden>
+        <svg class="done-badge" aria-hidden="true"><use href="#sprout-mini"/></svg>
+        <p><b>你发现了：</b>四个开关的值是 1、2、4、8，每往左一位就翻一倍。你拨出来的这四位<b>二进制</b>，能拼出 0 到 15 之间的每一个数。计算机把八个开关绑成一组，叫一个字节，能表示 0 到 255。</p>
+      </div>
+
+      <nav class="pager">
+        <button class="btn" data-go="cover">← 回到封面</button>
+        <button class="btn btn--next" data-go="exp2" data-need="1" disabled>下一个：AI 认猫 →</button>
+      </nav>
+      <p class="lockhint" id="hint1">还有 4 关没做完，先做完再走。</p>
+    </div>
+  </section>
+
+  <!-- ================= 实验二 ================= -->
+  <section class="page" id="exp2" data-page="exp2" aria-labelledby="exp2-h">
+    <div class="sheet">
+      <p class="kicker">实验二 · 1 个互动 + 4 道题</p>
+      <h2 id="exp2-h">AI 是怎么认出猫的</h2>
+      <svg class="squiggle" viewBox="0 0 120 9" aria-hidden="true"><path pathLength="1" d="M2 6c14-5 30-5 44 0s30 5 44 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <p class="sub">你一眼就认出这是猫。AI 不会看，它只会数线索。先让 AI 看一遍，再回答四道题。</p>
+
+      <p class="callout" id="callout2">第 1 步 · 把四个线索都勾上</p>
+
+      <div class="catlayout">
+        <div class="cat">
+          <svg viewBox="0 0 320 250" role="img" aria-label="一只简笔画的猫">
+            <g fill="#FFFDF6" stroke="#2A2A28" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+              <path id="p-tail" class="cat__tail" d="M234 198c34 4 50-16 44-40-3-13-12-20-22-21" fill="none"/>
+              <ellipse cx="160" cy="188" rx="72" ry="42"/>
+              <path d="M132 212v10M188 212v10" fill="none"/>
+              <path id="p-ear-l" class="cat__ear" d="M118 92L100 32l54 38z"/>
+              <path id="p-ear-r" class="cat__ear" d="M202 92L220 32l-54 38z"/>
+              <path d="M120 84L107 41l39 27zM200 84l13-43-39 27z" fill="#F3C9C3" stroke-width="3"/>
+              <circle cx="160" cy="108" r="50"/>
+            </g>
+            <path d="M130 152q30 16 60 0" fill="none" stroke="#D94F3D" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="160" cy="166" r="7" fill="#F2B705" stroke="#2A2A28" stroke-width="3"/>
+            <g id="p-eyes" class="cat__eyes" fill="#2A2A28">
+              <ellipse class="cat__eye" cx="142" cy="102" rx="6" ry="7"/>
+              <ellipse class="cat__eye" cx="178" cy="102" rx="6" ry="7"/>
+            </g>
+            <path d="M152 60q8 7 16 0" fill="none" stroke="#2A2A28" stroke-width="4" stroke-linecap="round"/>
+            <path d="M160 118l-7 8h14z" fill="#2A2A28"/>
+            <path d="M160 126v7M160 133q-9 8-16 2M160 133q9 8 16 2" fill="none" stroke="#2A2A28" stroke-width="4" stroke-linecap="round"/>
+            <g id="p-whiskers" stroke="#2A2A28" stroke-width="4" stroke-linecap="round">
+              <path d="M124 120l-42-8M124 130l-44 4M126 140l-40 16"/>
+              <path d="M196 120l42-8M196 130l44 4M194 140l40 16"/>
+            </g>
+          </svg>
+        </div>
+
+        <div class="feats">
+          <p class="feats__title">让 AI 看见哪些线索？</p>
+          <label class="feat"><input type="checkbox" id="f-ears"><span class="feat__box" aria-hidden="true"></span><span>耳朵尖尖的</span></label>
+          <label class="feat"><input type="checkbox" id="f-whiskers"><span class="feat__box" aria-hidden="true"></span><span>脸上有胡须</span></label>
+          <label class="feat"><input type="checkbox" id="f-eyes"><span class="feat__box" aria-hidden="true"></span><span>两只眼睛</span></label>
+          <label class="feat"><input type="checkbox" id="f-tail"><span class="feat__box" aria-hidden="true"></span><span>一条长尾巴</span></label>
+        </div>
+      </div>
+
+      <div class="verdict">
+        <p class="verdict__say">AI 说：<b id="aiSay">我不确定这是什么</b></p>
+        <div class="conf" role="img" aria-label="AI 的把握程度"><div class="conf__fill" id="confFill"></div></div>
+        <p class="conf__num" id="confNum">把握 8%</p>
+      </div>
+
+      <div class="quiz">
+        <p class="steplabel">第 2 步 · 四道题（答错能重选）</p>
+
+        <div class="q" data-answer="1">
+          <p class="q__ask"><b>1.</b> AI 说「是猫，把握 96%」。它一定是猫吗？</p>
+          <div class="q__opts">
+            <button class="opt" data-pick="0">一定是，96% 已经很高了</button>
+            <button class="opt" data-pick="1">不一定，它只是数到四条线索</button>
+          </div>
+          <p class="q__fb" aria-live="polite"></p>
+        </div>
+
+        <div class="q" data-answer="0">
+          <p class="q__ask"><b>2.</b> 只把一只猫的耳朵露给 AI 看，它会怎样？</p>
+          <div class="q__opts">
+            <button class="opt" data-pick="0">很可能认不出来</button>
+            <button class="opt" data-pick="1">照样认得出，它很聪明</button>
+          </div>
+          <p class="q__fb" aria-live="polite"></p>
+        </div>
+
+        <div class="q" data-answer="1">
+          <p class="q__ask"><b>3.</b> 它认得你家那只猫，就认得所有的猫吗？</p>
+          <div class="q__opts">
+            <button class="opt" data-pick="0">认得，猫不就是猫</button>
+            <button class="opt" data-pick="1">不一定，换个样子它可能就懵了</button>
+          </div>
+          <p class="q__fb" aria-live="polite"></p>
+        </div>
+
+        <div class="q" data-answer="2">
+          <p class="q__ask"><b>4.</b> 它认错了，最可能是什么原因？</p>
+          <div class="q__opts">
+            <button class="opt" data-pick="0">它故意骗人</button>
+            <button class="opt" data-pick="1">它坏了</button>
+            <button class="opt" data-pick="2">线索不够，或者它没见过这种东西</button>
+          </div>
+          <p class="q__fb" aria-live="polite"></p>
+        </div>
+      </div>
+
+      <div class="finding" id="find2" hidden>
+        <svg class="done-badge" aria-hidden="true"><use href="#sprout-mini"/></svg>
+        <p><b>你发现了：</b>AI 不会「看见」猫，它只是在数像猫的线索。线索越少，它越不敢肯定；它答错了，多半是线索的问题，不是它笨。</p>
+      </div>
+
+      <nav class="pager">
+        <button class="btn" data-go="exp1">← 上一个</button>
+        <button class="btn btn--next" data-go="exp3" data-need="1" disabled>下一个：能信吗 →</button>
+      </nav>
+      <p class="lockhint" id="hint2">还有 5 步没做完。</p>
+    </div>
+  </section>
+
+  <!-- ================= 实验三 ================= -->
+  <section class="page" id="exp3" data-page="exp3" aria-labelledby="exp3-h">
+    <div class="sheet">
+      <p class="kicker">实验三 · 5 封信</p>
+      <h2 id="exp3-h">这封信能信吗</h2>
+      <svg class="squiggle" viewBox="0 0 120 9" aria-hidden="true"><path pathLength="1" d="M2 6c14-5 30-5 44 0s30 5 44 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <p class="sub">五封信，有真有假。选错了不要紧，可以再选一次。</p>
+
+      <div class="letters" id="letters">
+        <article class="letter" data-answer="no" data-why="天上不会掉红包。一开口就要你点陌生链接的，多半是骗人的。">
+          <p class="letter__body">恭喜您被抽中一等奖！点击链接领取 666 元红包，名额只剩 3 个。</p>
+          <p class="letter__from">—— 陌生短信</p>
+          <div class="letter__ask">
+            <button class="btn btn--sm" data-pick="no">不能信</button>
+            <button class="btn btn--sm" data-pick="yes">能信</button>
+          </div>
+          <p class="letter__why" aria-live="polite"></p>
+        </article>
+
+        <article class="letter" data-answer="yes" data-why="没有要钱，没有要密码，也没有让你点链接。而且是你认识的人。">
+          <p class="letter__body">妈妈：今天要加班，你自己先吃饭，别等我。</p>
+          <p class="letter__from">—— 妈妈发来的微信</p>
+          <div class="letter__ask">
+            <button class="btn btn--sm" data-pick="no">不能信</button>
+            <button class="btn btn--sm" data-pick="yes">能信</button>
+          </div>
+          <p class="letter__why" aria-live="polite"></p>
+        </article>
+
+        <article class="letter" data-answer="no" data-why="没有人需要你的密码，除了你自己。真正的客服永远不会问。">
+          <p class="letter__body">我是游戏客服，你的账号被冻结了。把密码发给我，我帮你解封。</p>
+          <p class="letter__from">—— 陌生私信</p>
+          <div class="letter__ask">
+            <button class="btn btn--sm" data-pick="no">不能信</button>
+            <button class="btn btn--sm" data-pick="yes">能信</button>
+          </div>
+          <p class="letter__why" aria-live="polite"></p>
+        </article>
+
+        <article class="letter" data-answer="no" data-why="图书馆不会让你点陌生链接交罚款。要确认，就去学校图书馆官网，或者直接问老师。">
+          <p class="letter__body">同学你好，你借的书已经超期，请点这个链接交 5 元罚款，否则影响毕业。</p>
+          <p class="letter__from">—— 陌生短信，说自己是图书馆</p>
+          <div class="letter__ask">
+            <button class="btn btn--sm" data-pick="no">不能信</button>
+            <button class="btn btn--sm" data-pick="yes">能信</button>
+          </div>
+          <p class="letter__why" aria-live="polite"></p>
+        </article>
+
+        <article class="letter" data-answer="yes" data-why="没有链接，没有密码，没有要钱。是你认识的人，说的是明天要带的东西。">
+          <p class="letter__body">爸爸：明天记得把数学本带上，老师要检查。</p>
+          <p class="letter__from">—— 爸爸发来的微信</p>
+          <div class="letter__ask">
+            <button class="btn btn--sm" data-pick="no">不能信</button>
+            <button class="btn btn--sm" data-pick="yes">能信</button>
+          </div>
+          <p class="letter__why" aria-live="polite"></p>
+        </article>
+      </div>
+
+      <div class="finding" id="find3" hidden>
+        <svg class="done-badge" aria-hidden="true"><use href="#sprout-mini"/></svg>
+        <p><b>记住三句话：</b>他要我点链接吗？要我给钱或密码吗？这人我不认识吗？只要有一个「是」，就先停一停。</p>
+      </div>
+
+      <nav class="pager">
+        <button class="btn" data-go="exp2">← 上一个</button>
+        <button class="btn btn--next" data-go="cert" data-need="1" disabled>去领毕业证 →</button>
+      </nav>
+      <p class="lockhint" id="hint3">还有 5 封信没判断。</p>
+    </div>
+  </section>
+
+  <!-- ================= 毕业证 ================= -->
+  <section class="page" id="cert" data-page="cert" aria-labelledby="cert-h">
+    <div class="sheet sheet--cert">
+      <p class="kicker">毕业证明</p>
+      <h2 id="cert-h">豆苗实验室 · 结业证明</h2>
+      <svg class="squiggle" viewBox="0 0 120 9" aria-hidden="true"><path pathLength="1" d="M2 6c14-5 30-5 44 0s30 5 44 0" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>
+      <p class="sub">三个实验都做完了，才拿得到这张证。</p>
+
+      <div class="cert-card">
+        <p class="cert__line">兹证明 <input class="cert__name" id="certName" type="text" placeholder="写上你的名字" maxlength="12" aria-label="你的名字"> 同学，</p>
+        <p class="cert__line">在豆苗实验室完成了以下实验：</p>
+        <ul class="cert__list">
+          <li data-key="exp1" data-done="0"><span class="cert__tick" aria-hidden="true"></span> 开关就是数字（4 关）</li>
+          <li data-key="exp2" data-done="0"><span class="cert__tick" aria-hidden="true"></span> AI 是怎么认出猫的（4 道题）</li>
+          <li data-key="exp3" data-done="0"><span class="cert__tick" aria-hidden="true"></span> 这封信能信吗（5 封信）</li>
+        </ul>
+        <p class="cert__line">并且记住了三件事：陌生链接不点，密码和钱不给，不认识的人说什么都先停一停。</p>
+        <p class="cert__date" id="certDate"></p>
+        <div class="cert__stamp" aria-hidden="true">豆苗<br>实验室</div>
+      </div>
+
+      <div class="cert__acts">
+        <button class="btn btn--big" id="saveBtn">保存这张证书</button>
+        <button class="btn" id="restartBtn">再做一遍</button>
+      </div>
+      
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p>河海大学计算机与软件学院 ·「豆苗逐智·童享科技」公益科普志愿项目</p>
+  <p>本页可离线使用，自由用于社区与小学课堂。</p>
+</footer>
+
+<div class="intro" id="intro">
+  <div class="intro__bubble" id="introBubble"><b>欢迎来到豆苗实验室！</b>让我们来认识计算机。</div>
+  <div class="intro__char" id="introChar"><svg viewBox="0 0 80 86" aria-hidden="true"><use href="#pet-char"/></svg></div>
+</div>
+
+<div class="pet is-hidden" id="pet">
+  <div class="pet__bubble" id="petBubble" hidden></div>
+  <div class="pet__panel" id="petPanel" hidden>
+    <p class="pet__say" id="petSay">要我帮点什么？</p>
+    <div class="pet__acts">
+      <button class="pet__act" id="petHint" type="button">给我个提示</button>
+      <button class="pet__act" id="petChat" type="button">随便聊聊</button>
+    </div>
+    <button class="pet__close" id="petClose" type="button" aria-label="收起小豆苗">×</button>
+  </div>
+  <button class="pet__btn" id="petBtn" type="button" aria-expanded="false" aria-controls="petPanel" aria-label="摸摸小豆苗">
+    <span class="pet__tip" id="petTip" aria-hidden="true" hidden>摸摸我</span>
+    <svg class="pet__art" viewBox="0 0 80 86" aria-hidden="true"><use href="#pet-char"/></svg>
+  </button>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
